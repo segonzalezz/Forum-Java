@@ -5,7 +5,7 @@
   <groupId>org.example</groupId>
   <artifactId>test-2</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>test-2</name>
   <url>http://maven.apache.org</url>
@@ -41,5 +41,6 @@
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <version>3.3.5</version>
     </dependency>
+
   </dependencies>
 </project>

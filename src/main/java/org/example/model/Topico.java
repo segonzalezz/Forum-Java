@@ -30,6 +30,8 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
 
+    public Topico() {}
+
     public Topico(Long id, String titulo, String mensaje, LocalDateTime fechaCreacion, String status, Usuario autor, Curso curso, List<Respuesta> respuestas) {
         this.id = id;
         this.titulo = titulo;

@@ -29,4 +29,10 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario autenticarUsuario(String correo, String contrasena) {
+        return usuarioRepository.findByCorreoElectronicoAndContrasena(correo, contrasena)
+                .orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
+    }
+
 }

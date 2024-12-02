@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menú</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .menu-container {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        ul li a:hover {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="menu-container">
+    <h1>Bienvenido, <span th:text="${usuario.nombre}"></span></h1>
+    <ul>
+        <li><a th:href="@{/topicos/nuevo}">Crear Tópico</a></li>
+        <li><a th:href="@{/topicos/mis-topicos}">Mis Tópicos</a></li>
+        <li><a th:href="@{/topicos/todos}">Todos los Tópicos</a></li>
+        <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+    </ul>
+</div>
+</body>
+</html>
+
