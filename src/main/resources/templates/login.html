@@ -78,11 +78,41 @@
             font-size: 14px;
         }
     </style>
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const correo = document.getElementById("correo").value;
+            const contrasena = document.getElementById("contrasena").value;
+
+            try {
+                const response = await fetch("/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email: correo, password: contrasena })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token); // Guardar el token en el almacenamiento local
+                    alert(data.message);
+                    window.location.href = "/menu"; // Redirige al menú
+                } else {
+                    const errorData = await response.json();
+                    document.getElementById("error-message").textContent = errorData.message || "Error de autenticación.";
+                }
+            } catch (error) {
+                document.getElementById("error-message").textContent = "Ocurrió un error. Inténtalo nuevamente.";
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="login-container">
     <h1>Iniciar Sesión</h1>
-    <form th:action="@{/login}" method="post">
+    <form onsubmit="handleLogin(event)">
         <label for="correo">Correo Electrónico:</label>
         <input type="email" id="correo" name="correo" required />
 
@@ -91,8 +121,8 @@
 
         <button type="submit">Iniciar Sesión</button>
 
-        <!-- Mensaje de error opcional -->
-        <p class="error" th:if="${error}" th:text="${error}"></p>
+        <!-- Mensaje de error -->
+        <p id="error-message" class="error"></p>
     </form>
 </div>
 </body>

@@ -1,24 +1,27 @@
 package org.example.controller;
 
+import org.example.config.JwtUtil;
 import org.example.model.Usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.example.config.JwtUtil.*;
 
 @Controller
 @RequestMapping("/menu")
-@SessionAttributes("usuario")
 public class MenuController {
 
+    private final JwtUtil jwtUtil;
+
+    public MenuController(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
     @GetMapping
-    public String mostrarMenu(@ModelAttribute("usuario") Usuario usuario, Model model) {
-        if (usuario == null) {
-            return "redirect:/login"; // Si no hay usuario en sesión, redirige al login
-        }
-        model.addAttribute("usuario", usuario);
-        return "menu"; // Renderiza el template del menú
+    public String mostrarMenu(Model model, @RequestHeader("Authorization") String token) {
+        // Opcional: Validar token si es necesario
+        String username = jwtUtil.extractUsername(token.replace("Bearer ", ""));
+        model.addAttribute("usuario", username); // Puedes cargar datos adicionales del usuario
+        return "menu";
     }
 }

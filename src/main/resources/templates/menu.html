@@ -57,6 +57,31 @@
             border-color: #007bff;
         }
     </style>
+    <script>
+        async function loadMenu() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("No estás autenticado. Por favor, inicia sesión.");
+                window.location.href = "/login";
+                return;
+            }
+
+            const response = await fetch("/menu", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (!response.ok) {
+                alert("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+            }
+        }
+
+        window.onload = loadMenu;
+    </script>
 </head>
 <body>
 <div class="menu-container">
@@ -65,7 +90,7 @@
         <li><a th:href="@{/topicos/nuevo}">Crear Tópico</a></li>
         <li><a th:href="@{/topicos/mis-topicos}">Mis Tópicos</a></li>
         <li><a th:href="@{/topicos/todos}">Todos los Tópicos</a></li>
-        <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        <li><a href="#" onclick="localStorage.removeItem('token'); window.location.href='/login';">Cerrar Sesión</a></li>
     </ul>
 </div>
 </body>

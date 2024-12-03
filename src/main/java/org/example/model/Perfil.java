@@ -2,13 +2,21 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Perfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    @Column(unique = true, nullable = false)
+    private String nombre; // Este será el nombre del rol, como "USER", "ADMIN"
+
+    @ManyToMany(mappedBy = "perfiles")
+    private Set<Usuario> usuarios;
+
+    public Perfil() {}
 
     public Perfil(Long id, String nombre) {
         this.id = id;
@@ -30,5 +38,14 @@ public class Perfil {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }
+
 

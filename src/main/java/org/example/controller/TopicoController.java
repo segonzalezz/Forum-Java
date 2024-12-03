@@ -72,5 +72,4 @@ public class TopicoController {
         return "todos_topicos"; // Renderiza el template de todos los tópicos
     }
 
-
 }
